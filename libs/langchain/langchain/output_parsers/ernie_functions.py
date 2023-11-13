@@ -77,14 +77,15 @@ class JsonOutputFunctionsParser(BaseCumulativeTransformOutputParser[Any]):
             if 'function_call' in function_call:
                 fc = function_call["function_call"]
                 message.additional_kwargs['function_call'] = fc
+        # try:
+        #     function_call = message.additional_kwargs["function_call"]
+        # except KeyError as exc:
+        #     if partial:
+        #         return None
+        #     else:
+        #         raise OutputParserException(f"Could not parse function call: {exc}")
         try:
             function_call = message.additional_kwargs["function_call"]
-        except KeyError as exc:
-            if partial:
-                return None
-            else:
-                raise OutputParserException(f"Could not parse function call: {exc}")
-        try:
             if partial:
                 if self.args_only:
                     return parse_partial_json(
@@ -119,8 +120,11 @@ class JsonOutputFunctionsParser(BaseCumulativeTransformOutputParser[Any]):
                         raise OutputParserException(
                             f"Could not parse function call data: {exc}"
                         )
-        except KeyError:
-            return None
+        except KeyError as exc:
+            if partial:
+                return None
+            else:
+                raise OutputParserException(f"Could not parse function call: {exc}")
 
     # This method would be called by the default implementation of `parse_result`
     # but we're overriding that method so it's not needed.
