@@ -181,9 +181,9 @@ class ErnieBotChat(BaseChatModel):
 
     def _create_chat_result(self, response: Mapping[str, Any]) -> ChatResult:
         if 'function_call' in response:
-            function_call_str = f'{{"function_call": {json.dumps(response.get("function_call"))}}}'
+            fc = f'{{"function_call": {json.dumps(response.get("function_call"))}}}'
             generations = [
-                ChatGeneration(message=AIMessage(content=function_call_str))
+                ChatGeneration(message=AIMessage(content=fc))
             ]
         else:
             generations = [

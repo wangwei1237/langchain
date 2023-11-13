@@ -75,7 +75,8 @@ class JsonOutputFunctionsParser(BaseCumulativeTransformOutputParser[Any]):
         if 'function_call' in message.content:
             function_call = json.loads(message.content)
             if 'function_call' in function_call:
-                message.additional_kwargs['function_call'] = function_call["function_call"]
+                fc = function_call["function_call"]
+                message.additional_kwargs['function_call'] = fc
         try:
             function_call = message.additional_kwargs["function_call"]
         except KeyError as exc:
