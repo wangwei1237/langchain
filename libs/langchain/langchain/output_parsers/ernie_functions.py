@@ -72,11 +72,10 @@ class JsonOutputFunctionsParser(BaseCumulativeTransformOutputParser[Any]):
                 "This output parser can only be used with a chat generation."
             )
         message = generation.message
-
         if 'function_call' in message.content:
             function_call = json.loads(message.content)
-            message.additional_kwargs['function_call'] = function_call["function_call"]
-
+            if 'function_call' in function_call:
+                message.additional_kwargs['function_call'] = function_call["function_call"]
         try:
             function_call = message.additional_kwargs["function_call"]
         except KeyError as exc:
