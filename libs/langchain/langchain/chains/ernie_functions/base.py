@@ -171,7 +171,7 @@ def get_ernie_output_parser(
     Args:
         functions: Sequence where element is a dictionary, a pydantic.BaseModel class,
             or a Python function. If a dictionary is passed in, it is assumed to
-            already be a valid OpenAI function.
+            already be a valid Ernie function.
 
     Returns:
         A PydanticOutputFunctionsParser if functions are Pydantic classes, otherwise
