@@ -188,9 +188,7 @@ class ErnieBotChat(BaseChatModel):
                 ChatGeneration(message=AIMessage(content=function_call_str))
             ]
         else:
-            generations = [
-                ChatGeneration(message=AIMessage(content=response.get("result")))
-            ]
+            generations = [ChatGeneration(message=AIMessage(content=function_call_str))]
         token_usage = response.get("usage", {})
         llm_output = {"token_usage": token_usage, "model_name": self.model_name}
         return ChatResult(generations=generations, llm_output=llm_output)
